@@ -1,5 +1,6 @@
 package com.example.tea1
 
+import ObjectClasses.ProfilListeToDo
 import ObjectClasses.Settings
 import android.Manifest
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
+import androidx.room.Room
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val db = Room.databaseBuilder(
+            this,
+            AppDatabase::class.java, "bdd-tea"
+        ).build()
+
+        val userDao = db.userDao()
+        val users: List<ProfilListeToDo> = userDao.getAll()
+
+        Log.i("PMR",users.toString())
 
         if (verifReseau(this)) {
             Log.i("PMR","Logged in")
@@ -62,6 +74,8 @@ class MainActivity : AppCompatActivity() {
 
         editText2 = findViewById(R.id.editPasswordText)
         mdp = editText2?.text.toString()
+        Settings.password = mdp
+
         lifecycleScope.launch {
             try {
                 Log.i("PMR", "Tentative de connexion pour : $pseudo")

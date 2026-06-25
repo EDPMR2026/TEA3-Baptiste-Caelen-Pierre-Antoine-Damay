@@ -25,6 +25,8 @@ class ChoixListActivity : AppCompatActivity() {
 
     private var btnPrefs: Button? = null
     private var pseudo: String = ""
+    private var password: String = ""
+    private var lastId: Int = 0
     private var editTextListe: EditText? = null
 
     var adapter: CustomAdapter? = null
@@ -39,20 +41,23 @@ class ChoixListActivity : AppCompatActivity() {
             insets
         }
         pseudo = Settings.pseudo
+        password = Settings.password
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         var isInList = false
         Settings.listOfUsers.forEach { element ->
-            if (pseudo == element.login) {
+            if (pseudo == element.password) {
                 adapter = CustomAdapter(element)
                 Settings.profilActuel = element
                 isInList = true
             }
         }
         if (!isInList) {
-            var nouvProfil = ProfilListeToDo(pseudo, mutableListOf())
+            Settings.lastId += 1
+            lastId = Settings.lastId
+            var nouvProfil = ProfilListeToDo(lastId, pseudo, password, mutableListOf())
             Settings.listOfUsers.add(nouvProfil)
             Settings.profilActuel = nouvProfil
             adapter = CustomAdapter(nouvProfil)
