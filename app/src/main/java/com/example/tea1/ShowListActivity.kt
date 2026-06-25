@@ -114,7 +114,7 @@ class ShowListActivity : AppCompatActivity() {
 
 
 
-private fun refreshItems(id : String, token : String) {
+fun refreshItems(id : String, token : String, liste: ListeToDo = maListe) {
     lifecycleScope.launch {
         try {
             // Appel API pour récupérer les items en JSON
@@ -136,8 +136,8 @@ private fun refreshItems(id : String, token : String) {
             }
 
             // Mise à jour de l'affichage
-            maListe.lesItems.clear()
-            maListe.lesItems.addAll(nouveauxItems)
+            liste.lesItems.clear()
+            liste.lesItems.addAll(nouveauxItems)
             adapter?.notifyDataSetChanged()
 
         } catch (e: Exception) {

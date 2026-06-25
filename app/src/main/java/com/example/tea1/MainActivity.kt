@@ -1,5 +1,7 @@
 package com.example.tea1
 
+import ObjectClasses.ItemToDo
+import ObjectClasses.ListeToDo
 import ObjectClasses.ProfilListeToDo
 import ObjectClasses.Settings
 import android.Manifest
@@ -34,14 +36,34 @@ class MainActivity : AppCompatActivity() {
             AppDatabase::class.java, "bdd-tea"
         ).build()
 
-        val userDao = db.userDao()
-        val users: List<ProfilListeToDo> = userDao.getAll()
-
-        Log.i("PMR",users.toString())
-
         if (verifReseau(this)) {
+            val listeDao = db.listeToDoDao()
+            val listes: List<ListeToDo> = listeDao.getAll()
+
+            val itemDao = db.itemToDoDao()
+            val items: List<ItemToDo> = itemDao.getAll()
+
+            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+            val hash = prefs.getString("hash", "") ?: ""
+
+            for (l in listes) {
+
+                for (e in items) {
+                    val showListActivity = ShowListActivity()
+                    showListActivity.refreshItems(e.id!!, hash, l)
+                }
+            }
+
             Log.i("PMR","Logged in")
             afficherBtnOk()
+        }
+
+        else {
+            val listeDao = db.listeToDoDao()
+            listeDao.insertAll(arrayOf())
+
+            val itemDao = db.itemToDoDao()
+            itemDao.insertAll(arrayOf())
         }
     }
 

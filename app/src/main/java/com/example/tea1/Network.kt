@@ -112,6 +112,12 @@ interface TeaApiService {
     ): String
     // Note : Le serveur renvoie du JSON, mais on le reçoit en String pour l'instant
 
+    @POST("lists")
+    suspend fun addList(
+        @Query("label") label: String,
+        @Header("hash") hash: String
+    ): String
+    
     @GET("lists/{id}/items")
     suspend fun getItems(
         @Path("id") id: String, // L'ID de la liste que l'on vient de recevoir
