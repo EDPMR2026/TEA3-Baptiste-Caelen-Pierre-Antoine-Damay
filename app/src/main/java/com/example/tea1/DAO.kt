@@ -56,6 +56,9 @@ public interface ItemToDoDao {
     @Query("SELECT * FROM item WHERE description LIKE :titre LIMIT 1")
     fun findByName(titre: String): ItemToDo
 
+    @Query("UPDATE item SET fait = (:coche) WHERE description LIKE :titre LIMIT 1")
+    fun updateItem(coche: Boolean, titre: String)
+
     @Insert
     fun insertAll(items: Array<ItemToDo>)
 
