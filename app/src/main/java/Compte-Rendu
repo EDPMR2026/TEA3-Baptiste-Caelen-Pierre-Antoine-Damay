@@ -1,46 +1,36 @@
-PMR - TEA 2
+PMR - TEA 3
 
 
 Introduction
 
-Ce TEA de PMR a pour objectif de mettre en place la communication entre notre application du premier TEA et une API. Pour ce faire, nous devrons dans un premier temps connecter notre application au réseau, puis la lier à l’API en question, et enfin effectuer des requêtes HTTP auprès de l’API. Une fois tout cela fait, nous pourrons faire en sorte qu’un utilisateur puisse se connecter à la plateforme, et nous pourrons aussi récupérer, modifier et ajouter des éléments aux listes et aux items de l’utilisateur connecté.
+Ce TEA de PMR a pour objectif de mettre en place une base de données SQLite qui permettra de stocker des données pour notre application. Grâce à cela, nous pourrons aussi implémenter un mode hors ligne dans lequel l’utilisateur pourra toujours utiliser toutes les fonctionnalités de l’application. Une fois sa connexion à Internet retrouvée, les changements effectués dans l’application seront envoyés à l’API.
 
 Implémentation
 Ressources utilisées
 
-	Tout d’abord, pour ce qui est de l’API, nous utilisons l’API suivante : http://tomnab.fr/todo-api/. Nous avons aussi accès à une documentation sur cette API pour pouvoir comprendre les fonctionnalités qu’elle propose. Afin de bien pouvoir visualiser dans son intégralité l’API et ainsi pouvoir mieux travailler avec cette dernière, nous l’avons ouverte sur Postman, ce qui a grandement facilité notre compréhension de cette API.
-
-	De plus, nous avions aussi accès à des fonctions déjà réalisées permettant d’interagir avec le réseau et d’effectuer des requêtes dans le fichier “android reseau”. Cependant, les fonctions de ce fichier comportaient quelques problèmes qu’il fallait donc résoudre en amont. Par exemple, il fallait rajouter dans le fichier gradle certaines importations, et de nombreuses fonctions étaient dépréciées donc il fallait retrouver leurs équivalents actuels. Néanmoins, ces fonctions ont été utiles une fois corrigées pour traiter certaines interactions avec le réseau et l’API.
-
-	Enfin, nous avons pu travailler avec la bibliothèque Retrofit afin d’interagir avec l’API et de réaliser les différentes requêtes HTTP nécessaires à la réalisation de ce TEA. Pour se familiariser avec cette bibliothèque, nous avons utilisé le tutoriel fourni dans le sujet et proposé par Android.
+	Pour ce TEA, nous avons d’abord dû utiliser la plateforme SQLite afin de pouvoir créer une base de données sur laquelle nous pouvons ajouter des informations sur l’application et sur les données de l’utilisateur. De plus, nous avons utilisé comme deuxième ressource l’ORM Room, une bibliothèque permettant de stocker des données dans une base de données SQLite.
 
 Travail réalisé
 
-	La première étape de notre travail fut en réalité de reprendre le TEA précédent et de le compléter. En effet, certaines fonctionnalités n’étaient pas parfaitement codées et il subsistait donc quelques bugs. C’est pourquoi nous avons repris notre travail précédent dans l’optique de corriger tous ces bugs afin de pouvoir partir sur de bonnes bases pour le TEA n°2. C’est donc ce que nous avons fait, ce qui nous a permis de commencer sereinement ce nouveau TEA.
+	Nous avons d’abord ajouté les dépendances nécessaires à l’implémentation du mode hors-ligne, puis transformé les objets utilisés dans les précédents TEA ( listes, items et profils ) en entités pour procéder à leur sauvegarde dans la base de données, que l’on a ensuite créée. Cependant, certains problèmes d’importations nous ont empêché de pouvoir tester le bon fonctionnement de notre implémentation de la base de données.
 
-	Une fois cela fait, nous avons commencé l’implémentation de ce TEA. Pour ce faire, nous avons débuté par la réalisation de toutes les fonctions permettant de se connecter à l’API dont nous avons besoin. Nous avons d’abord remis à jour la fonction “verifReseau” et l’avons testée rapidement pour vérifier son bon fonctionnement. Après avoir connecté notre application au réseau, nous avons commencé à travailler avec l’API. Ce fut fastidieux mais nous avons réussi à connecter notre application à cette dernière.
-
-	Une fois l’API en contact avec notre application, nous commençâmes à réaliser nos premières requêtes HTTP avec l’API. La première fut la requête POST permettant de se connecter avec le pseudo et le mot-de-passe d’un utilisateur. Le plus difficile était de faire fonctionner cette première requête HTTP et de comprendre comment s'articulaient toutes les bibliothèques et ressources à notre disposition. Au moment où nous avons réussi à faire fonctionner cette requête POST, nous avons pu enchaîner rapidement sur les autres questions du TEA car le plus dur avait été fait. Voici quelques images de notre avancée :
-
-
+En effet, une erreur nécessitant de faire appel à kapt, un outil déprécié, faisait crash l’application. Nous avons donc essayé d’implémenter quelques fonctionnalités mais cela nous a fortement empêché d’aller plus loin. Néanmoins, la totalité des requêtes nécessaires ont été programmées et les outils nécessaires au bon fonctionnement de la base de données comme les entités et les DAOs ont aussi été programmés.
 
 
 Conclusion
 
-Dans ce TEA, nous avons appris à connecter une application Android à un réseau et à une API, ainsi qu’à interagir avec ces derniers pour effectuer des requêtes HTTP. Ces compétences et connaissances seront parfaites lors de nos futurs projets d’applications, car ce sont des pré-requis nécessaires pour faire fonctionner des applications.
+Dans ce TEA, nous avons appris à connecter une base de données à une application. Cela pourra être fortement utile plus tard car il est très souvent nécessaire de faire appel à des bases de données lors du développement d’une application.
 
 De plus, le travail en binôme est intéressant et permet aussi de se familiariser avec l’utilisation de Github. La division des tâches sur les branches et l’architecture globale de l’application sont des aspects très intéressants que nous avons pu aborder au cours de ce TEA. Nous en ressortons grandis en tant que programmeurs.
 
 Perspectives
 
-La quasi-totalité des fonctionnalités demandées ont été implémentées lors de ce TEA, sauf le fait de pouvoir changer l’URL de l’API. En effet, cette fonctionnalité a été implémentée et fonctionne presque comme attendu, mais lors de la connexion à l’API associée à un nouvel URL, cela ne fonctionne pas. La correction de ce bug pourrait donc être une perspective intéressante afin de perfectionner notre TEA n°2.
+La plupart des outils nécessaires ont été mis en place afin de préparer la base de données. Cependant, nous n’avons pas pu tester notre implémentation et les nombreuses requêtes que nous avons programmées n’ont malheureusement pas pu être utilisées.
 
-Par ailleurs, nous n’avons pas vraiment porté attention aux questions facultatives de ce TEA. Le TEA en lui-même était déjà bien complexe et complet en termes de variétés de questions et de difficultés, c’est pourquoi nous avons préféré nous concentrer exclusivement aux questions demandées.
+Par ailleurs, nous n’avons pas porté attention aux questions facultatives de ce TEA. Le TEA en lui-même était déjà bien complexe et complet en termes de variétés de questions et de difficultés, c’est pourquoi nous avons préféré nous concentrer exclusivement aux questions demandées.
 
 Bibliographie
 
-http://www.json.org/jsonfr.html
-https://developer.android.com/reference/org/json/JSONObject
-https://github.com/google/gson
-https://developer.android.com/codelabs/basic-android-kotlin-compose-getting-data-internet
-https://documenter.getpostman.com/view/375205/2sB2x8EWcV  
+https://drive.google.com/file/d/18gFDRUs_HvPY42MAInu6yLPpL_Lfi4Ci/view?fbclid=IwY2xjawSqTrFleHRuA2FlbQIxMABzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEeO6OIEDGhp4ttAVDhO73lUKnCNWRBARXK1jfBDmYWDZB_PgoRXXRnbpvHEPI_aem__W1t_fj6MqTjSdtdDaIwAQ
+https://developer.android.com/training/data-storage/room?hl=fr
+https://kotlinlang.org/docs/kapt.html#use-in-gradle
